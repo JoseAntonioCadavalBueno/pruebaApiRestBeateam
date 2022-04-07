@@ -1,0 +1,61 @@
+.container-fluid{
+    padding: 20px;
+}
+.buscar{
+    padding-top: 20px;
+}
+
+.tooltipOBS{
+    position: relative;
+}
+
+.tooltipOBS:hover
+.tooltipOBS-box{
+    display: inline-block;
+}
+
+.tooltipOBS-box{
+    display: none;
+    position: absolute;
+    background: rgb(142, 161, 163);
+    line-height: 20px;
+    z-index:500;
+    text-align: left;
+    color: black;
+    font-size: 14px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    left: -110px;
+    right: 0;
+    width: 250px;
+    top: 35px;
+}
+
+.tooltipOBS-box::after{
+    content:"";
+    display: block;
+    border-bottom: 7px solid rgb(142, 161, 163);
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    position: absolute;
+    top: -7px;
+    left: calc(50% - 7px);
+}
+.buttonX{
+    border-color: red;
+    color: red;
+}
+.buttonBuscar{
+    border-color: blue;
+    color: blue;
+}
+.info{
+    color: blue;
+}
+.exclamation{
+    color: yellow;
+    background-color: black;
+    border-radius: 50%;
+    height: 26px;
+    width: 28px;
+}
