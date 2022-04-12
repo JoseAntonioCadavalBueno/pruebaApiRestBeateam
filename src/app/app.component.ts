@@ -63,6 +63,7 @@ export class AppComponent{
       };
     };
     /*Se limpia el campo estado por precaución aunque el filtro ya está aplicado*/
+    this.page=1;
     this.estado="";
     return this.resultData;
   }
