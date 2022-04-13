@@ -8,10 +8,12 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { TableComponent } from './components/table/table.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    TableComponent
   ],
   imports: [
     BrowserModule,

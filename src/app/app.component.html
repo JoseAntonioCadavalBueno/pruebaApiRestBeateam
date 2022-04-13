@@ -176,111 +176,38 @@
     </div>
     <div class="col-10">
       <div class="container-fluid">
-        <div class="row">
-          <!--Tabla contenido-->
-          <table class="table table-borderless table-hover">
-              <!--ENCABEZADO-->
-              <thead>
-                <tr>
-                  <th scope="col">PRODUCTO</th>
-                  <th scope="col"></th>
-                  <th scope="col">Q</th>
-                  <th scope="col">ESTADO</th>
-                  <th scope="col">TIPO</th>
-                  <th scope="col">FECHA</th>
-                  <th scope="col">CLIENTE</th>
-                </tr>
-              </thead>
-              <!--FILAS DE CONTENIDO RECORRIDAS POR NGFOR-->
-              <tbody>
-                <tr 
-                  *ngFor="let row  of resultData | paginate: { itemsPerPage: 17, currentPage: page }"
-                  class="border-bottom border-dark"
-                >
-                  <!--CAMPO PRODUCTO-->
-                  <td><img src = {{row.logo}} style="width: 80px; height: 20px;" />{{row.referencia}}</td>
-                  <!--CONDICIONAL CAMPO INFO-->
-                  <td 
-                    *ngIf="row.observacion.length==0 else elseInfo"
-                  >
-                    <div class="tooltipOBS info">
-                      <i class="fa-2x fa-solid fa-circle-info"></i>
-                    <span class="tooltipOBS-box">
-                      <b>Obs. linea: </b>
-                      <br>
-                      <b>Obs. pedido: </b>
-                      <br>
-                      <b>Pedido por: </b> {{row.alias_cliente | lowercase}}
-                    </span>
-                    </div>
-                  </td>
-                  <ng-template #elseInfo>
-                    <td>
-                      <div class="tooltipOBS exclamation">
-                        <i class="fa-2x fa-solid fa-circle-exclamation"></i>
-                        <span class="tooltipOBS-box">
-                          <b>Obs. linea: </b> {{row.usuario | uppercase}} - {{row.id}}
-                          <br>
-                          <b>Obs. pedido: </b> {{row.observacion}}
-                          <br>
-                          <b>Pedido por: </b> {{row.alias_cliente | lowercase}}
-                        </span>
-                      </div>
-                    </td>
-                  </ng-template>
-                  <!--CAMPO CANTIDAD-->
-                  <td>x<b>{{row.cantidad}}</b></td>
-                  <!--CONDICIONAL CAMPO ESTADO-->
-                  <td
-                    *ngIf="row.estado=='Entregada' else elifEstado"
-                  >
-                    <mark class="bg-success bg-gradient rounded text-light">{{row.estado}}</mark>
-                  </td>
-                  <ng-template #elifEstado>
-                    <td
-                      *ngIf="row.estado=='Desconsolidada' else elseEstado"
-                    >
-                      <mark class="bg-primary bg-gradient rounded text-light">{{row.estado}}</mark>
-                    </td>
-                  </ng-template>
-                  <ng-template #elseEstado>
-                    <td>
-                      <mark class="bg-secondary bg-gradient rounded text-light">{{row.estado}}</mark>
-                    </td>
-                  </ng-template>
-                  <!--CAMPO TIPO-->
-                  <td><mark class="bg-dark bg-gradient rounded text-light">{{row.tipo}}</mark></td>
-                  <!--CAMPO FECHA CON PIPE-->
-                  <td>
-                    <b class="fs-6">{{row.fecha | date: 'HH:mm'}}</b>
-                    {{row.fecha | date: 'dd MMM yy'}}
-                  </td>
-                  <!--CAMPO CLIENTE-->
-                  <td>
-                    {{row.codigo_cliente}} 
-                    <b class="fs-5">{{row.alias_cliente}}</b>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+        <div class="row p-2">
+            <div class="col-2"><h3><b>PRODUCTO</b></h3></div>
+            <div class="col-1"></div>
+            <div class="col-1"><h3><b>Q</b></h3></div>
+            <div class="col-1 text-center"><h3><b>ESTADO</b></h3></div>
+            <div class="col-1 text-center"><h3><b>TIPO</b></h3></div>
+            <div class="col-2"><h3><b>FECHA</b></h3></div>
+            <div class="col"><h3><b>CLIENTE</b></h3></div>
+            <!--FILAS DE CONTENIDO RECORRIDAS POR NGFOR-->
+             <app-table
+                class="hover"
+                [myData]="row"
+                *ngFor="let row of data | paginate: { itemsPerPage: 17, currentPage: page }"
+              ></app-table>
         </div>
         <!--CONTADOR DE ELEMENTOS DE LA TABLA-->
-        <div class="row">
-          <div class="col-2">
-            <h1>LÍNEAS: <b>{{resultData.length}}</b></h1>
-          </div>
-          <div class="col-7">
-          </div>
-          <!--PAGINACIÓN DE LA TABLA-->
-          <div class="col-3">
-            <pagination-controls 
-              (pageChange)="page = $event" 
-              previousLabel="" 
-              nextLabel=""
-            >
-            </pagination-controls>
-          </div>
+      <div class="row">
+        <div class="col-2">
+          <h1>LÍNEAS: <b>{{data.length}}</b></h1>
         </div>
+        <div class="col-7">
+        </div>
+        <!--PAGINACIÓN DE LA TABLA-->
+      <div class="col-3">
+        <pagination-controls 
+          (pageChange)="page = $event" 
+          previousLabel="" 
+          nextLabel=""
+        >
+        </pagination-controls>
+    </div>
+  </div>
       </div>
     </div>
   </div>

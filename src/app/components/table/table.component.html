@@ -1,0 +1,74 @@
+<div class="row border-bottom border-dark p-1">
+    <!--CAMPO PRODUCTO-->
+    <div class="col-2">
+        <img src = {{myData.logo}} style="width: 80px; height: 20px;" />{{myData.referencia}}
+    </div>
+    <!--CAMPO INFO-->
+    <div 
+        class="col-1 text-end"
+        *ngIf="myData.observacion.length==0 else elseInfo"
+    >
+        <div class="tooltipOBS info">
+            <i class="fa-2x fa-solid fa-circle-info"></i>
+            <span class="tooltipOBS-box">
+                <b>Obs. linea: </b>
+                <br>
+                <b>Obs. pedido: </b>
+                <br>
+                <b>Pedido por: </b> {{myData.alias_cliente | lowercase}}
+            </span>
+        </div>
+    </div>
+    <ng-template #elseInfo>
+        <div class="col-1 text-end">
+            <div class="tooltipOBS exclamation">
+                <i class="fa-2x fa-solid fa-circle-exclamation"></i>
+                <span class="tooltipOBS-box">
+                    <b>Obs. linea: </b> {{myData.usuario | uppercase}} - {{myData.id}}
+                    <br>
+                    <b>Obs. pedido: </b> {{myData.observacion}}
+                    <br>
+                    <b>Pedido por: </b> {{myData.alias_cliente | lowercase}}
+                </span>
+            </div>    
+        </div>  
+    </ng-template>
+    <!--CAMPO CANTIDAD-->
+    <div class="col-1">
+        x<b>{{myData.cantidad}}</b>
+    </div>
+    <!--CAMPO ESTADO-->
+    <div 
+        class="col-1 text-center"
+        *ngIf="myData.estado=='Entregada' else elifEstado"
+    >
+        <mark class="bg-success bg-gradient rounded text-light">{{myData.estado}}</mark>
+    </div>
+    <ng-template #elifEstado>
+        <div 
+        class="col-1 text-center"
+        *ngIf="myData.estado=='Desconsolidada' else elseEstado"
+        >
+            <mark class="bg-primary bg-gradient rounded text-light">{{myData.estado}}</mark>
+        </div>
+    </ng-template>
+    <ng-template #elseEstado>
+        <div class="col-1 text-center">
+            <mark class="bg-secondary bg-gradient rounded text-light">{{myData.estado}}</mark>
+        </div>
+    </ng-template>
+    <!--CAMPO TIPO-->
+    <div class="col-1 text-center">
+        <mark class="bg-dark bg-gradient rounded text-light">{{myData.tipo}}</mark>
+    </div>
+    <!--CAMPO FECHA-->
+    <div class="col-2">
+        <b class="fs-6">{{myData.fecha | date: 'HH:mm'}}</b>
+        {{myData.fecha | date: 'dd MMM yy'}}
+    </div>
+    <!--CAMPO CLIENTE-->
+    <div class="col">
+        {{myData.codigo_cliente}} 
+        <b>{{myData.alias_cliente}}</b>
+    </div>
+</div>

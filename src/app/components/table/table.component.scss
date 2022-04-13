@@ -1,0 +1,42 @@
+.tooltipOBS{
+    position: relative;
+}
+
+.tooltipOBS:hover
+.tooltipOBS-box{
+    display: inline-block;
+}
+
+.tooltipOBS-box{
+    display: none;
+    position: absolute;
+    background: rgb(142, 161, 163);
+    line-height: 20px;
+    z-index:500;
+    text-align: left;
+    color: black;
+    font-size: 14px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    left: -35px;
+    right: 0;
+    width: 250px;
+    top: 35px;
+}
+
+.tooltipOBS-box::after{
+    content:"";
+    display: block;
+    border-bottom: 7px solid rgb(142, 161, 163);
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    position: absolute;
+    top: -7px;
+    left: calc(50% - 7px);
+}
+.info{
+    color: blue;
+}
+.exclamation{
+    color: rgb(160, 160, 29);
+}
