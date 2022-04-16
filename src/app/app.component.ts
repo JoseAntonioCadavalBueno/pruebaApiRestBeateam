@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from './service/api.service';
 
+import { Tareas } from './interfaces/tareas';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -19,7 +21,8 @@ export class AppComponent implements OnInit{
   
     public tipos: Array<any> = [];
     public estados: Array<any> = [];
-    public data: Array<any> = [];
+    public data: Array<Tareas> = [];
+    public dataPruebas: Array<Tareas> = [];
   
     public page!: number;
   
@@ -63,10 +66,9 @@ export class AppComponent implements OnInit{
         };
       });
       /*Se limpia el campo estado por precaución aunque el filtro ya está aplicado*/
-      this.estado="";
       this.page = 1;
       return this.data;
-    }
+    };
     /*Funciones asignadas a los botones para borrar el contenido de los campos del filtro exceptuando el campo estado que se borra en filterPost() */
     clienteClear(){
       this.cliente="";

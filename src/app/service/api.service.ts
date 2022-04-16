@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import * as CryptoJS from 'crypto-js';
+import { Observable } from 'rxjs';
+import { Tareas } from '../interfaces/tareas';
 
 @Injectable({
   providedIn: 'root'
@@ -18,30 +20,30 @@ export class ApiService {
   usuario = "JCADAVAL"+this.añoHoy+this.mesHoy+this.diaHoy;
   usuarioEncriptado = CryptoJS.SHA384(this.usuario).toString();
   /*Cabecera de todas las conexiones que se utilizan tal y como se detalla en la documentación */
-  getTipos(){
+  getTipos(): Observable<any>{
     let header = new HttpHeaders({
       'funcion':'getTipos',
       'X-Auth': this.usuarioEncriptado
     });
     
-    return this.http.get(this.url, {headers: header})
-  }
+    return this.http.get(this.url, {headers: header});
+  };
 
-  getEstados(){
+  getEstados(): Observable<any>{
     let header = new HttpHeaders({
       'funcion':'getEstados',
       'X-Auth': this.usuarioEncriptado
     });
     
-    return this.http.get(this.url, {headers: header})
-  }
+    return this.http.get(this.url, {headers: header});
+  };
 
-  getTareas(){
+  getTareas(): Observable<Tareas>{
     let header = new HttpHeaders({
       'funcion':'getTareas',
       'X-Auth': this.usuarioEncriptado
     });
-    
-    return this.http.get(this.url, {headers: header})
-  }
+
+    return this.http.get<Tareas>(this.url, {headers: header});
+  };
 }
