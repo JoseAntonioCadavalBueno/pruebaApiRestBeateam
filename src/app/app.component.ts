@@ -26,13 +26,17 @@ export class AppComponent implements OnInit{
     public tipos: Array<any> = [];
     public estados: Array<any> = [];
     public data: Tareas[] = [];
-    public dataPruebas: Tareas[] = [];
 
     /*Pagina actual de la paginación */
     public page!: number;
 
     ngOnInit(){
-      this.api.getTareas().subscribe((resp: any) => {
+      this.api.getTareas(
+        this.cliente,
+        this.referencia,
+        this.usuario,
+        this.tipo
+      ).subscribe((resp: any) => {
         this.data = resp;
       });
       this.api.getTipos().subscribe((resp: any) => {
@@ -52,16 +56,14 @@ export class AppComponent implements OnInit{
       };
       const fechaInicio = this.fecha[0].toISOString();
       const fechaFin = this.fecha[1].toISOString();
-      this.api.getTareas().subscribe((resp: any) => {
+      this.api.getTareas(
+        this.cliente,
+        this.referencia,
+        this.usuario,
+        this.tipo
+      ).subscribe((resp: any) => {
         for(const row of resp){
-          if(
-            row.alias_cliente.toUpperCase().includes(this.cliente.toUpperCase())
-            && row.referencia.toUpperCase().includes(this.referencia.toUpperCase())
-            && row.usuario.toUpperCase().includes(this.usuario.toUpperCase())
-            && row.fecha > fechaInicio
-            && row.fecha < fechaFin
-            && row.tipo.includes(this.tipo)
-          ){
+          if(row.fecha > fechaInicio && row.fecha < fechaFin){
             if(!(this.estado.length==0)){
               for(const rowE of this.estado){
                 if(row.estado.includes(rowE)){
@@ -70,11 +72,11 @@ export class AppComponent implements OnInit{
             };
             }else{
               this.data.push(row);
-            }
+            };
           };
         };
       });
-      /*Se limpia el campo estado por precaución aunque el filtro ya está aplicado*/
+      /*Se pone a uno la paginación para que al recargar o filtrar la paginación vuelva a la primera página*/
       this.page = 1;
       return this.data;
     };
@@ -98,8 +100,8 @@ export class AppComponent implements OnInit{
     getEstadoValue(event: any, estadoChecked: string){
       if(event.target.checked){
         this.estado.push(estadoChecked);
-      }else{;
+      }else{
         this.estado = this.estado.filter(x=>x!=estadoChecked);
-      }
+      };
     }
 }

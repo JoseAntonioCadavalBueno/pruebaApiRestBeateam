@@ -10,7 +10,8 @@
 .tooltipOBS-box{
     display: none;
     position: absolute;
-    background: rgb(142, 161, 163);
+    border-style: ridge;
+    background: rgb(240, 233, 233);
     line-height: 20px;
     z-index:500;
     text-align: left;
@@ -27,7 +28,8 @@
 .tooltipOBS-box::after{
     content:"";
     display: block;
-    border-bottom: 7px solid rgb(142, 161, 163);
+    border-style: ridge;
+    border-bottom: 7px solid rgb(240, 233, 233);
     border-left: 7px solid transparent;
     border-right: 7px solid transparent;
     position: absolute;

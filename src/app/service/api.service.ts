@@ -20,7 +20,7 @@ export class ApiService {
   /*Se construye el string x-auth y se encripta para validar la conexión con el API rest */
   usuario = "JCADAVAL"+this.añoHoy+this.mesHoy+this.diaHoy;
   usuarioEncriptado = CryptoJS.SHA384(this.usuario).toString();
-  /*Cabecera de todas las conexiones que se utilizan tal y como se detalla en la documentación */
+  /*Cabecera y parametros de todas las conexiones que se utilizan tal y como se detalla en la documentación */
   getTipos(): Observable<any>{
     let header = new HttpHeaders({
       'funcion':'getTipos',
@@ -45,13 +45,27 @@ export class ApiService {
     );
   };
 
-  getTareas(): Observable<Tareas[]>{
+  getTareas(
+    cliente: string,
+    referencia: string,
+    usuario: string,
+    tipo: string
+  ): Observable<Tareas[]>{
     let header = new HttpHeaders({
       'funcion':'getTareas',
       'X-Auth': this.usuarioEncriptado
     });
+    
+    let params = new HttpParams({
+      fromObject:{
+        cliente: cliente,
+        referencia: referencia,
+        usuario: usuario,
+        tipo: tipo
+      }
+    });
 
-    return this.http.get<Tareas[]>(this.url, {headers: header})
+    return this.http.get<Tareas[]>(this.url, {headers: header, params: params})
     .pipe(
       map((resp: any) => resp.data)
     );

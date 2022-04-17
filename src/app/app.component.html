@@ -139,9 +139,10 @@
       
           <!--filtro estado-->
           <div class="row">
-              <label class="form-label p-2">
-                  Estado:
-              </label>
+            <label class="form-label p-2">
+                Estado:
+            </label>
+            <div class="border p-2">
               <div 
               *ngFor="let row of estados"
               >
@@ -152,6 +153,7 @@
                   (change)="getEstadoValue($event, row)"
                 /> {{row}}
               </div>
+            </div>
           </div>
           <!--BOTON FILTRO-->
           <div class="row buscar">
