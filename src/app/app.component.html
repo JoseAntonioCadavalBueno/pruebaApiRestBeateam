@@ -142,22 +142,15 @@
               <label class="form-label p-2">
                   Estado:
               </label>
-              <div class = "border border-1">
-                <form
-                  *ngFor="let row of estados"
-                  name="formEstado"
-                  enctype="text/plain"
-                  class="p-1"
-                >
-                  <label><input
-                    class="form-check-input"
-                    id="{{row}}"
-                    type="radio"
-                    [value]="row"
-                    name="estado"
-                    [(ngModel)]="estado"
-                  /> {{row}}</label>
-                </form>
+              <div 
+              *ngFor="let row of estados"
+              >
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  [value]="row"
+                  (change)="getEstadoValue($event, row)"
+                /> {{row}}
               </div>
           </div>
           <!--BOTON FILTRO-->

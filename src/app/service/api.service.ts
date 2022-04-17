@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import * as CryptoJS from 'crypto-js';
 import { Observable } from 'rxjs';
 import { Tareas } from '../interfaces/tareas';
+import { map } from 'rxjs/operators'; 
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +27,10 @@ export class ApiService {
       'X-Auth': this.usuarioEncriptado
     });
     
-    return this.http.get(this.url, {headers: header});
+    return this.http.get(this.url, {headers: header})
+    .pipe(
+      map((resp: any) => resp.data)
+    );
   };
 
   getEstados(): Observable<any>{
@@ -35,15 +39,21 @@ export class ApiService {
       'X-Auth': this.usuarioEncriptado
     });
     
-    return this.http.get(this.url, {headers: header});
+    return this.http.get(this.url, {headers: header})
+    .pipe(
+      map((resp: any) => resp.data)
+    );
   };
 
-  getTareas(): Observable<Tareas>{
+  getTareas(): Observable<Tareas[]>{
     let header = new HttpHeaders({
       'funcion':'getTareas',
       'X-Auth': this.usuarioEncriptado
     });
 
-    return this.http.get<Tareas>(this.url, {headers: header});
+    return this.http.get<Tareas[]>(this.url, {headers: header})
+    .pipe(
+      map((resp: any) => resp.data)
+    );
   };
 }

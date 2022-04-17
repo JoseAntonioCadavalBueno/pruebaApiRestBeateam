@@ -24,6 +24,7 @@ import { TableComponent } from './components/table/table.component';
     ReactiveFormsModule,
     BsDatepickerModule
   ],
+
   providers: [],
   bootstrap: [AppComponent]
 })

@@ -17,30 +17,32 @@ export class AppComponent implements OnInit{
     public usuario="";
     public fecha: Array<Date> = [new Date('2020-01-01'), new Date()];
     public tipo="";
-    public estado ="";
-  
+    public estado: Array<String> = [];
+
+    constructor(
+      private api: ApiService,
+    ) { }
+    /*Array de datos */
     public tipos: Array<any> = [];
     public estados: Array<any> = [];
-    public data: Array<Tareas> = [];
-    public dataPruebas: Array<Tareas> = [];
-  
+    public data: Tareas[] = [];
+    public dataPruebas: Tareas[] = [];
+
+    /*Pagina actual de la paginación */
     public page!: number;
-  
-  
-    constructor(
-      private api: ApiService
-    ) { }
-  
+
     ngOnInit(){
       this.api.getTareas().subscribe((resp: any) => {
-        this.data = resp.data;
+        this.data = resp;
       });
       this.api.getTipos().subscribe((resp: any) => {
-        this.tipos = resp.data;
+        this.tipos = resp;
       });
       this.api.getEstados().subscribe((resp: any) => {
-        this.estados = resp.data;
+        this.estados = resp;
       });
+
+      this.estado = new Array<String>();
     }
     /*Función para filtrar los datos de la tabla con los valores del filtro */
     filterPost(){
@@ -51,7 +53,7 @@ export class AppComponent implements OnInit{
       const fechaInicio = this.fecha[0].toISOString();
       const fechaFin = this.fecha[1].toISOString();
       this.api.getTareas().subscribe((resp: any) => {
-        for(const row of resp.data){
+        for(const row of resp){
           if(
             row.alias_cliente.toUpperCase().includes(this.cliente.toUpperCase())
             && row.referencia.toUpperCase().includes(this.referencia.toUpperCase())
@@ -59,9 +61,16 @@ export class AppComponent implements OnInit{
             && row.fecha > fechaInicio
             && row.fecha < fechaFin
             && row.tipo.includes(this.tipo)
-            && row.estado.includes(this.estado)
           ){
-            this.data.push(row);
+            if(!(this.estado.length==0)){
+              for(const rowE of this.estado){
+                if(row.estado.includes(rowE)){
+                  this.data.push(row);
+                };
+            };
+            }else{
+              this.data.push(row);
+            }
           };
         };
       });
@@ -82,8 +91,15 @@ export class AppComponent implements OnInit{
     fechaClear(){
       this.fecha = [new Date('2020-01-01'), new Date()];
     };
-    tipoClear(){;
+    tipoClear(){
       this.tipo="Todos";
     }; 
-
+    /*Lista de estados seleccionados*/
+    getEstadoValue(event: any, estadoChecked: string){
+      if(event.target.checked){
+        this.estado.push(estadoChecked);
+      }else{;
+        this.estado = this.estado.filter(x=>x!=estadoChecked);
+      }
+    }
 }
